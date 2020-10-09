@@ -24,7 +24,7 @@ const Rating = ({ value, text, starColor }) => {
                 <i style={{ color: starColor }} className={value === 5 ? 'fas fa-star' : (value >= 4.5) ? 'fas fa-star-half-alt' : 'far fa-star'}> </i>
             </span>
 
-            <span> {text && text} </span>
+            <div> {text && text} </div>
         </div>
     )
 }
