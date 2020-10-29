@@ -5,8 +5,10 @@ import { Container } from 'react-bootstrap'
 
 import Footer from './components/Footer'
 import Header from './components/Header'
+
 import HomeScreen from './components/screens/HomeScreen'
 import ProductScreen from './components/screens/ProductScreen'
+import CartScreen from './components/screens/CartScreen'
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
         <Container>
           <Route path='/' component={HomeScreen} exact />
           <Route path='/product/:id' component={ProductScreen} />
+          <Route path='/cart/:id?' component={CartScreen} />
         </Container>
       </main>
       <Footer />
