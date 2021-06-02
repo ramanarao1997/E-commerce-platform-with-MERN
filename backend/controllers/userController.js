@@ -4,8 +4,8 @@ import User from '../models/user.js'
 import generateToken from '../utils/generateToken.js'
 
 
-// @desc: Register a new user
-// @route: Post /api/users/profile
+// @desc:   Register a new user
+// @route:  Post /api/users/register
 // @access: public
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body
@@ -38,8 +38,8 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc: Authenticate user & get token
-// @route: Post /api/users/login
+// @desc:   Authenticate user & get token
+// @route:  Post /api/users/login
 // @access: public
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body
@@ -59,10 +59,8 @@ const authUser = asyncHandler(async (req, res) => {
     }
 })
 
-
-
-// @desc: Get user profile
-// @route: GET /api/users/profile
+// @desc:   Get user profile
+// @route:  GET /api/users/profile
 // @access: private
 const getUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id)
@@ -80,6 +78,35 @@ const getUserProfile = asyncHandler(async (req, res) => {
     }
 })
 
+// @desc:   Update user profile
+// @route:  PUT /api/users/profile
+// @access: Private
+const updateUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+
+    if (user) {
+        user.name = req.body.name || user.name
+        user.email = req.body.email || user.email
+
+        if (req.body.password) {
+            user.password = req.body.password
+        }
+
+        const updatedUser = await user.save()
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+            token: generateToken(updatedUser._id)
+        })
+    } else {
+        res.status(404)
+        throw new Error('User not found')
+    }
+})
 
 
-export { registerUser, authUser, getUserProfile }
+
+export { registerUser, authUser, getUserProfile, updateUserProfile }

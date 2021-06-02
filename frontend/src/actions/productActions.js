@@ -18,7 +18,7 @@ export const listProducts = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: PRODUCT_LIST_FAIL,
-            payload: error.response.data.message === undefined ? error.response : error.response.data.message
+            payload: error.response.data.message === undefined ? error.message : error.response.data.message
         })
     }
 }
@@ -36,7 +36,7 @@ export const listProductDetails = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: PRODUCT_DETAIL_FAIL,
-            payload: error.response.data.message === undefined ? error.response : error.response.data.message
+            payload: error.response.data.message === undefined ? error.message : error.response.data.message
         })
     }
 }
